@@ -1,0 +1,277 @@
+<title>Boda Sofía y Martín</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Karla:wght@400;500;700&display=swap">
+<style>
+/* Layout: botanical stationery column; scratch-to-reveal date as the hero, then countdown, gallery, RSVP with menu, gifts and a guestbook wall. Single light look by design. */
+:root{
+  --paper:#F7F7F2; --card:#FFFFFF; --sage:#8FA58A; --sage-deep:#4F6A50; --ink:#1F2A22;
+  --muted:#5E6B60; --line:#D9DED3; --blush:#E9C9BE;
+  --display:'Italiana', 'Didot', serif; --body:'Karla', 'Helvetica Neue', sans-serif;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:480px;margin:0 auto;padding-inline:16px;padding-block:20px 56px;display:flex;flex-direction:column;gap:34px}
+.demo{align-self:center;border:1px solid var(--sage);color:var(--sage-deep);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:5px 12px;border-radius:99px}
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+.sprig{width:120px;height:auto;color:var(--sage)}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--sage-deep)}
+h1{margin:0;font-family:var(--display);font-weight:400;font-size:54px;line-height:1;letter-spacing:.02em;text-wrap:balance}
+h1 em{display:block;font-style:normal;font-size:30px;color:var(--sage-deep);margin:4px 0}
+.scratch{position:relative;width:280px;max-width:100%;aspect-ratio:2/1;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--card);touch-action:none}
+.scratch .under{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.under small{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.under b{font-family:var(--display);font-weight:400;font-size:44px;line-height:1.05;color:var(--ink)}
+.scratch canvas{position:absolute;inset:0;width:100%;height:100%;cursor:pointer;transition:opacity .6s}
+.hint{font-size:13px;color:var(--muted)}
+h2{margin:0;font-family:var(--display);font-weight:400;font-size:36px;line-height:1.1;text-align:center}
+.section{display:flex;flex-direction:column;gap:14px}
+.sub{margin:0;text-align:center;color:var(--muted)}
+.count{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.count div{text-align:center;padding:14px 0}
+.count div+div{border-left:1px solid var(--line)}
+.count b{display:block;font-family:var(--display);font-weight:400;font-size:34px;font-variant-numeric:tabular-nums}
+.count span{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.when{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.when article{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:4px}
+.when span{font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--sage-deep)}
+.when b{font-family:var(--display);font-weight:400;font-size:24px;line-height:1.15}
+.when p{margin:0;font-size:14px;color:var(--muted)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{flex:1 1 180px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:99px;border:1px solid var(--ink);background:transparent;color:var(--ink);font:700 14px var(--body);letter-spacing:.1em;text-transform:uppercase;text-decoration:none;cursor:pointer}
+.btn.solid{background:var(--sage-deep);border-color:var(--sage-deep);color:#fff}
+.btn:focus-visible{outline:2px solid var(--sage);outline-offset:3px}
+.btn svg{width:18px;height:18px;flex:none}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.gallery div{aspect-ratio:3/4;border-radius:10px;display:grid;place-items:end start;padding:8px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#fff}
+.gallery div:nth-child(1){background:linear-gradient(170deg,#A9BBA3,#4F6A50)}
+.gallery div:nth-child(2){background:linear-gradient(170deg,#E9C9BE,#B48676);grid-row:span 2;aspect-ratio:auto}
+.gallery div:nth-child(3){background:linear-gradient(170deg,#C9CFC0,#7A8A72)}
+.gallery div:nth-child(4){background:linear-gradient(170deg,#D8C3B0,#8E715D)}
+.gallery div:nth-child(5){background:linear-gradient(170deg,#B7C7C9,#56707A)}
+form{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+label,.lbl{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--sage-deep)}
+input[type=text],textarea{width:100%;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font:inherit;padding:12px 14px}
+input[type=text]{min-height:48px}
+textarea{min-height:90px;resize:vertical}
+input:focus,textarea:focus{outline:2px solid var(--sage);outline-offset:1px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{display:inline-flex;align-items:center;min-height:42px;padding:0 14px;border:1px solid var(--line);border-radius:99px;cursor:pointer;font-size:14px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink);background:var(--paper)}
+.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips input:checked+span{font-weight:700}
+.chips label:has(input:checked){background:var(--sage-deep);border-color:var(--sage-deep);color:#fff}
+.chips label:has(input:focus-visible){outline:2px solid var(--sage);outline-offset:2px}
+.ok{background:#EAF0E6;border:1px solid var(--sage);border-radius:12px;padding:12px 14px;color:var(--sage-deep);font-weight:700}
+.tally{display:flex;justify-content:center;gap:8px;align-items:baseline;color:var(--muted);font-size:14px}
+.tally b{font-family:var(--display);font-weight:400;font-size:28px;color:var(--ink)}
+.gift{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center}
+.alias{font-family:ui-monospace,Menlo,monospace;font-size:18px;background:var(--paper);border:1px dashed var(--sage);border-radius:10px;padding:10px 16px;user-select:all;word-break:break-all}
+.wall{display:flex;flex-direction:column;gap:10px}
+.note{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.note p{margin:0 0 6px;font-size:15px}
+.note span{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--sage-deep)}
+.note.new{border-color:var(--sage);animation:pop .5s ease}
+.music{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:6;width:54px;height:54px;border-radius:50%;border:1px solid var(--sage-deep);background:var(--card);color:var(--sage-deep);display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 18px rgba(31,42,34,.15)}
+.music svg{width:22px;height:22px}.music:hover{background:var(--sage-deep);color:#fff}
+.music:focus-visible{outline:2px solid var(--sage);outline-offset:3px}
+.foot{text-align:center;font-size:12px;color:var(--muted)}
+.foot a{color:var(--sage-deep);font-weight:700}
+@keyframes pop{from{transform:scale(.96);opacity:.3}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.note.new{animation:none}}
+</style>
+
+<a class="music" id="music" href="https://open.spotify.com/" target="_blank" rel="noopener" aria-label="Escuchar nuestra playlist en Spotify">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+</a>
+
+<main class="wrap">
+  <span class="demo">Demo · Anse Studio</span>
+
+  <section class="hero">
+    <svg class="sprig" viewBox="0 0 120 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+      <path d="M10 30 Q60 4 110 30"/><path d="M30 21 q-4-10 4-14 q2 8-4 14Z M45 15 q-2-10 6-12 q0 8-6 12Z M60 13 q0-10 8-10 q-2 8-8 10Z M75 15 q2-10 10-8 q-4 8-10 8Z M90 21 q4-9 12-5 q-6 6-12 5Z" fill="currentColor" fill-opacity=".25"/>
+    </svg>
+    <span class="kicker">Nos casamos</span>
+    <h1>Sofía<em>&amp;</em>Martín</h1>
+    <div class="scratch" id="scratch">
+      <div class="under"><small>Guardá la fecha</small><b>20 · 03 · 27</b></div>
+      <canvas id="foil" aria-label="Rascá para descubrir la fecha" role="img"></canvas>
+    </div>
+    <span class="hint" id="hint">Rascá con el dedo para descubrir la fecha</span>
+  </section>
+
+  <section class="section" aria-label="Cuenta regresiva">
+    <div class="count">
+      <div><b id="d">--</b><span>días</span></div>
+      <div><b id="h">--</b><span>horas</span></div>
+      <div><b id="m">--</b><span>min</span></div>
+      <div><b id="s">--</b><span>seg</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>El gran día</h2>
+    <div class="when">
+      <article><span>Ceremonia</span><b>18:30 h</b><p>Parroquia San Juan</p></article>
+      <article><span>Fiesta</span><b>20:30 h</b><p>Salón Las Glicinas</p></article>
+    </div>
+    <div class="row">
+      <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Lan%C3%BAs%2C%20Buenos%20Aires" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Cómo llegar</a>
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Boda%20Sof%C3%ADa%20y%20Mart%C3%ADn&amp;dates=20270320T213000Z/20270321T080000Z" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>Agendar</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Nuestra historia</h2>
+    <p class="sub">Siete años, dos mudanzas y un perro después.</p>
+    <div class="gallery" aria-label="Galería de fotos (ejemplo)">
+      <div>Foto 1</div><div>Foto 2</div><div>Foto 3</div><div>Foto 4</div><div>Foto 5</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Confirmá tu asistencia</h2>
+    <p class="sub">Antes del 20 de febrero.</p>
+    <form id="rsvp">
+      <div class="field"><label for="g-name">Nombre y apellido</label><input id="g-name" type="text" autocomplete="name" placeholder="Ej: Lucía Pérez" required></div>
+      <div class="field"><span class="lbl" id="att-l">¿Venís?</span>
+        <div class="chips" role="radiogroup" aria-labelledby="att-l">
+          <label><input type="radio" name="att" id="att-y" value="Sí, voy" checked><span>Sí, voy</span></label>
+          <label><input type="radio" name="att" id="att-n" value="No puedo ir"><span>No puedo ir</span></label>
+        </div></div>
+      <div class="field"><span class="lbl" id="menu-l">Menú</span>
+        <div class="chips" role="radiogroup" aria-labelledby="menu-l">
+          <label><input type="radio" name="menu" id="m-std" value="Estándar" checked><span>Estándar</span></label>
+          <label><input type="radio" name="menu" id="m-veg" value="Vegetariano"><span>Vegetariano</span></label>
+          <label><input type="radio" name="menu" id="m-tacc" value="Sin TACC"><span>Sin TACC</span></label>
+        </div></div>
+      <button class="btn solid" type="submit">Confirmar</button>
+      <div class="ok" id="ok" hidden></div>
+    </form>
+    <div class="tally"><b id="tally">86</b> invitados ya confirmaron</div>
+  </section>
+
+  <section class="section">
+    <h2>Nuestra playlist</h2>
+    <p class="sub">Ayudanos a armar la música de la fiesta. Buscá tu tema en Spotify y sumalo a nuestra lista.</p>
+    <div class="gift">
+      <div class="field" style="width:100%;text-align:left">
+        <label for="track">Tu canción</label>
+        <input id="track" type="text" placeholder="Ej: Corazón de seda – Ricardo Montaner" autocomplete="off">
+      </div>
+      <a class="btn solid" id="findSong" href="https://open.spotify.com/search" target="_blank" rel="noopener" style="flex:none;width:100%">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M7.5 9.5c3-1 6.5-.7 9.2.8M8 12.6c2.5-.7 5.2-.4 7.3.8M8.6 15.4c2-.5 3.9-.3 5.6.6"/></svg>
+        Buscar en Spotify</a>
+      <a class="btn" href="https://open.spotify.com/" target="_blank" rel="noopener" style="flex:none;width:100%">Abrir nuestra playlist</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Regalos</h2>
+    <div class="gift">
+      <p class="sub">Lo más lindo es que estés. Si querés hacernos un regalo, este es nuestro alias.</p>
+      <div class="alias" id="alias">sofi.martin.boda</div>
+      <button class="btn" type="button" id="copy" style="flex:none;width:100%">Copiar alias</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Dejales un mensaje</h2>
+    <p class="sub">Los novios van a leer todos el día después de la fiesta.</p>
+    <form id="msgForm">
+      <div class="field"><label for="msg-name">Tu nombre</label><input id="msg-name" type="text" placeholder="Ej: Tía Marta" required></div>
+      <div class="field"><label for="msg-text">Mensaje</label><textarea id="msg-text" placeholder="Escribí algo lindo para Sofi y Martín" required></textarea></div>
+      <button class="btn solid" type="submit">Publicar mensaje</button>
+    </form>
+    <div class="wall" id="wall" aria-live="polite">
+      <div class="note"><p>¡Los amo! Que esta nueva etapa sea la más feliz. Nos vemos en la pista.</p><span>Cami y Fede (ejemplo)</span></div>
+      <div class="note"><p>Martín, sabíamos que la ibas a convencer. ¡Felicidades a los dos!</p><span>Los del fútbol (ejemplo)</span></div>
+    </div>
+  </section>
+
+  <p class="foot">Invitación diseñada por <a href="https://www.instagram.com/anse_studio_/" target="_blank" rel="noopener">Anse Studio</a></p>
+</main>
+
+<script>
+(function(){
+  // scratch-off date
+  var box=document.getElementById('scratch'), cv=document.getElementById('foil'), ctx=cv.getContext('2d'), done=false;
+  function paint(){
+    var r=box.getBoundingClientRect(), k=devicePixelRatio||1;
+    cv.width=r.width*k; cv.height=r.height*k;
+    var g=ctx.createLinearGradient(0,0,cv.width,cv.height);
+    g.addColorStop(0,'#B9C7B3');g.addColorStop(.5,'#8FA58A');g.addColorStop(1,'#6F8A6E');
+    ctx.globalCompositeOperation='source-over';ctx.fillStyle=g;ctx.fillRect(0,0,cv.width,cv.height);
+    ctx.fillStyle='rgba(255,255,255,.9)';ctx.font=(15*k)+'px Karla, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('RASCÁ ACÁ',cv.width/2,cv.height/2);
+  }
+  paint();
+  var down=false;
+  function at(e){var r=cv.getBoundingClientRect(),k=cv.width/r.width;return {x:(e.clientX-r.left)*k,y:(e.clientY-r.top)*k,k:k};}
+  function scratch(e){
+    if(!down||done) return; var p=at(e);
+    ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(p.x,p.y,22*p.k,0,7);ctx.fill();
+    check();
+  }
+  var tries=0;
+  function check(){
+    if(++tries%8) return;
+    var d=ctx.getImageData(0,0,cv.width,cv.height).data,clear=0;
+    for(var i=3;i<d.length;i+=64) if(d[i]===0) clear++;
+    if(clear/(d.length/64)>.5) reveal();
+  }
+  function reveal(){done=true;cv.style.opacity=0;cv.style.pointerEvents='none';document.getElementById('hint').textContent='¡Te esperamos el sábado 20 de marzo de 2027!';}
+  cv.addEventListener('pointerdown',function(e){down=true;cv.setPointerCapture(e.pointerId);scratch(e);});
+  cv.addEventListener('pointermove',scratch);
+  cv.addEventListener('pointerup',function(){down=false;});
+  cv.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')reveal();});
+  cv.tabIndex=0;
+
+  // countdown to 20 Mar 2027 18:30 UTC-3
+  var target=Date.UTC(2027,2,20,21,30,0);
+  function pad(n){return (n<10?'0':'')+n}
+  function tick(){var t=Math.max(0,target-Date.now());
+    document.getElementById('d').textContent=Math.floor(t/864e5);
+    document.getElementById('h').textContent=pad(Math.floor(t/36e5)%24);
+    document.getElementById('m').textContent=pad(Math.floor(t/6e4)%60);
+    document.getElementById('s').textContent=pad(Math.floor(t/1e3)%60);}
+  tick();setInterval(tick,1000);
+
+  // RSVP (demo: shows the confirmation on the page)
+  var confirmed=false;
+  document.getElementById('rsvp').addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=document.getElementById('g-name').value.trim();
+    var att=document.querySelector('input[name=att]:checked').value;
+    var menu=document.querySelector('input[name=menu]:checked').value;
+    var ok=document.getElementById('ok');ok.hidden=false;
+    ok.textContent=att==='Sí, voy'?'¡Gracias, '+name+'! Quedaste confirmado/a con menú '+menu.toLowerCase()+'. Los novios lo ven en su lista.':'Gracias por avisar, '+name+'. ¡Te vamos a extrañar!';
+    if(att==='Sí, voy'&&!confirmed){confirmed=true;var t=document.getElementById('tally');t.textContent=+t.textContent+1;}
+  });
+
+  // copy alias
+  document.getElementById('copy').addEventListener('click',function(){
+    var b=this, txt=document.getElementById('alias').textContent;
+    function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById('alias'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Alias seleccionado';}
+    try{navigator.clipboard.writeText(txt).then(function(){b.textContent='¡Alias copiado!';},sel);}catch(err){sel();}
+  });
+
+  // Spotify song search
+  var track=document.getElementById('track'), find=document.getElementById('findSong');
+  track.addEventListener('input',function(){var q=track.value.trim();find.href=q?'https://open.spotify.com/search/'+encodeURIComponent(q):'https://open.spotify.com/search';});
+
+  // guestbook (demo: lives in this page)
+  document.getElementById('msgForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var n=document.getElementById('msg-name'),m=document.getElementById('msg-text');
+    var el=document.createElement('div');el.className='note new';
+    var p=document.createElement('p');p.textContent=m.value.trim();
+    var s=document.createElement('span');s.textContent=n.value.trim();
+    el.appendChild(p);el.appendChild(s);
+    var w=document.getElementById('wall');w.insertBefore(el,w.firstChild);
+    m.value='';
+  });
+
+})();
+</script>
